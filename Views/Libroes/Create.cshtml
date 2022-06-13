@@ -1,0 +1,70 @@
+﻿@model csharp_bibliotecaMvc.Models.Libro
+
+@{
+    ViewData["Title"] = "Create";
+}
+@using (Html.BeginForm("Create", "Libroes", FormMethod.Post))
+{
+    <table cellpadding="0" cellspacing="0" class="center">
+        <tr>
+            <th colspan="2" align="center">Inserisci i dati del libro:</th>
+        </tr>
+        <tr>
+            <td><p style="color:red;font-weight: bold;">Titolo: </p></td>
+            <td>
+                @Html.TextBoxFor(m => m.Titolo)
+            </td>
+        </tr>
+        <tr>
+            <td><p style="color:red;font-weight: bold;">Scaffale:</p> </td>
+            <td>
+                @Html.TextBoxFor(m => m.Scaffale)
+            </td>
+        </tr>
+        <tr>
+            <td><p style="color:red;font-weight: bold;">Anno:</p> </td>
+            <td>
+                @Html.TextBoxFor(m => m.Anno)
+            </td>
+        </tr>
+        <tr>
+            <td><p style="color:red;font-weight: bold;">ISBN:</p> </td>
+            <td>
+                @Html.TextBoxFor(m => m.ISBN)
+            </td>
+        </tr>
+        <tr>
+            <td><p style="color:red;font-weight: bold;">Stato: </p></td>
+            <td>
+                @Html.DropDownListFor(m => m.Stato, new List<SelectListItem>
+                { new SelectListItem{Text="Libero", Value="Libero"},
+                    new SelectListItem{Text="In prestito", Value="InPrestito"}}, "Please select")
+            </td>
+        </tr>
+        <tr id="input-container">
+            <td><p style="color:red;font-weight: bold;">Lista autori</p></td>
+        </tr>
+        <tr>
+            <td><button type="button" class="btn btn-primary" id="add-inputs">Aggiungi Autore</button></td>
+            <td><input type="submit" value="Submit"/></td>
+        </tr>
+    </table>
+}
+
+@section Scripts
+{
+  <script>
+    const addInputAuth = document.getElementById("add-inputs");
+    const inputContainer = document.getElementById("input-container");
+    let currIndex = 0;
+    addInputAuth.addEventListener('click',(e)=>{
+        //e.preventDefault;
+        const newTd = document.createElement("td");
+        newTd.innerHTML = `<input data-val="true" data-val-required="The Cognome field is required." id="Autori_${currIndex}__Cognome" name="Autori[${currIndex}].Cognome" type="text"  />
+                        <input data-val="true" data-val-required="The Nome field is required." id="Autori_${currIndex}__Nome" name="Autori[${currIndex}].Nome" type="text" />
+                        <input data-val="true" data-val-required="The DataNascita field is required." id="Autori_${currIndex}__DataNascita" name="Autori[${currIndex}].DataNascita" type="text" value="26/04/1340 00:00:00" />`
+        inputContainer.appendChild(newTd);
+        currIndex += 1;
+    });
+  </script>
+}
