@@ -58,7 +58,6 @@
     const inputContainer = document.getElementById("input-container");
     let currIndex = 0;
     addInputAuth.addEventListener('click',(e)=>{
-        //e.preventDefault;
         const newTd = document.createElement("td");
         newTd.innerHTML = `<input data-val="true" data-val-required="The Cognome field is required." id="Autori_${currIndex}__Cognome" name="Autori[${currIndex}].Cognome" type="text"  />
                         <input data-val="true" data-val-required="The Nome field is required." id="Autori_${currIndex}__Nome" name="Autori[${currIndex}].Nome" type="text" />

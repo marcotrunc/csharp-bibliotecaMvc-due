@@ -23,7 +23,7 @@ namespace csharp_bibliotecaMvc.Models
         public int? Scaffale { get; set; }
         public List<Autore>? Autori { get; set; }   
         
-        public virtual ICollection<Prestito> Prestito { get; set; }
+        public virtual ICollection<Prestito>? Prestito { get; set; }
        
     }
 }
