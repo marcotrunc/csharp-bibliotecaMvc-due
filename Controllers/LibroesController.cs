@@ -48,12 +48,11 @@ namespace csharp_bibliotecaMvc.Controllers
         // GET: Libroes/Create
         public IActionResult Create()
         {
-            Libro myLibro = new Libro();
-            myLibro.Autori = new List<Autore>();
-            myLibro.Autori.Add(new Autore { Nome = "Dante", Cognome = "Alighieri", DataNascita = DateTime.Parse("26/04/1340") });
-            myLibro.Autori.Add(new Autore { Nome = "Giorgio", Cognome = "Bocca", DataNascita = DateTime.Parse("26/04/1933") });
-
-            return View(myLibro);
+            //Libro myLibro = new Libro();
+            //myLibro.Autori.Add(new Autore { Nome = "Dante", Cognome = "Alighieri", DataNascita = DateTime.Parse("26/04/1340") });
+            //myLibro.Autori.Add(new Autore { Nome = "Giorgio", Cognome = "Bocca", DataNascita = DateTime.Parse("26/04/1933") });
+            ViewData["listaAutori"] = _context.Autores.ToList<Autore>();
+            return View();
         }
 
         // POST: Libroes/Create
@@ -65,9 +64,16 @@ namespace csharp_bibliotecaMvc.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(libro);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                string[] str = Request.Form["AutoreData"];
+                for(int i = 0; i < str.Length; i++)
+                {
+                    string[] words = str[i].Split(',');
+                    Autore nuovo = new Autore() {Nome = words[0], Cognome = words[1], DataNascita = DateTime.Parse(words[2])};
+                    libro.Autori.Add(nuovo);
+                    _context.Add(libro);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                } 
             }
             return View(libro);
         }

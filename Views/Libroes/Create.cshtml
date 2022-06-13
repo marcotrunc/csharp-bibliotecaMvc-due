@@ -41,6 +41,17 @@
                     new SelectListItem{Text="In prestito", Value="InPrestito"}}, "Please select")
             </td>
         </tr>
+        <tr>
+            <td><p style="color:red;font-weight: bold;">Lista autori: </p></td>
+            <td> 
+                <select name="AutoreData" id="autori-select" multiple> 
+                @foreach(var aut  in ViewData["listaAutori"] as List<Autore>)
+                {
+                    <option value ="@aut.Nome,@aut.Cognome,@aut.DataNascita">@aut.Nome @aut.Cognome</option>
+                }
+                </select>
+            </td>
+        </tr>
         <tr id="input-container">
             <td><p style="color:red;font-weight: bold;">Lista autori</p></td>
         </tr>

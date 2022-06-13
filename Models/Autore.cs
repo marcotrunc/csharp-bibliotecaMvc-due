@@ -12,8 +12,6 @@ namespace csharp_bibliotecaMvc.Models
         public string Nome { get; set; }
         [Column(Order = 3), System.ComponentModel.DataAnnotations.Key]
         public DateTime DataNascita { get; set; }
-
         public ICollection<Libro>? Libri { get; set; }
-
     }
 }
