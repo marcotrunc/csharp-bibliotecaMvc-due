@@ -60,16 +60,20 @@ namespace csharp_bibliotecaMvc.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Libro libro)
+        public  async Task<IActionResult> Create(Libro libro, string[] AutoreData)
         {
             if (ModelState.IsValid)
             {
-                string[] str = Request.Form["AutoreData"];
+                string[] str = AutoreData;
+                if(libro.Autori == null)
+                    libro.Autori = new();
+
                 for(int i = 0; i < str.Length; i++)
                 {
                     string[] words = str[i].Split(',');
-                    Autore nuovo = new Autore() {Nome = words[0], Cognome = words[1], DataNascita = DateTime.Parse(words[2])};
-                    libro.Autori.Add(nuovo);
+                    var cercaAutore = _context.Autores.Where(m => (m.Cognome == words[1] && m.Nome == words[0] && m.DataNascita == Convert.ToDateTime(words[2]))).First();
+                    if (cercaAutore != null)
+                        libro.Autori.Add(cercaAutore);
                     _context.Add(libro);
                     await _context.SaveChangesAsync();
                     return RedirectToAction(nameof(Index));
